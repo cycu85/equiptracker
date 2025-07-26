@@ -87,7 +87,7 @@ app/
 
 1. **Sklonuj repozytorium**
 ```bash
-git clone https://github.com/nazwa-firmy/equiptracker.git
+git clone https://github.com/cycu85/equiptracker.git
 cd equiptracker
 ```
 
