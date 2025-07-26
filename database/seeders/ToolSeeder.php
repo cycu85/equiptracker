@@ -129,7 +129,10 @@ class ToolSeeder extends Seeder
         ];
 
         foreach ($tools as $toolData) {
-            \App\Models\Tool::create($toolData);
+            \App\Models\Tool::updateOrCreate(
+                ['serial_number' => $toolData['serial_number'], 'name' => $toolData['name']], // Warunek wyszukiwania
+                $toolData // Dane do utworzenia/aktualizacji
+            );
         }
     }
 }

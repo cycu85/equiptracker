@@ -52,7 +52,10 @@ class ModuleSeeder extends Seeder
         ];
 
         foreach ($modules as $module) {
-            \App\Models\Module::create($module);
+            \App\Models\Module::updateOrCreate(
+                ['name' => $module['name']], // Warunek wyszukiwania
+                $module // Dane do utworzenia/aktualizacji
+            );
         }
     }
 }

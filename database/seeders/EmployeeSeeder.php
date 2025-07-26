@@ -71,7 +71,10 @@ class EmployeeSeeder extends Seeder
         ];
 
         foreach ($employees as $employeeData) {
-            \App\Models\Employee::create($employeeData);
+            \App\Models\Employee::updateOrCreate(
+                ['employee_number' => $employeeData['employee_number']], // Warunek wyszukiwania
+                $employeeData // Dane do utworzenia/aktualizacji
+            );
         }
     }
 }

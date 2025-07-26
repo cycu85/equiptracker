@@ -46,7 +46,10 @@ class UserSeeder extends Seeder
         ];
 
         foreach ($users as $userData) {
-            \App\Models\User::create($userData);
+            \App\Models\User::updateOrCreate(
+                ['username' => $userData['username']], // Warunek wyszukiwania po username
+                $userData // Dane do utworzenia/aktualizacji
+            );
         }
     }
 }

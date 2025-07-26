@@ -102,16 +102,19 @@ class InstallController extends Controller
             Artisan::call('migrate:fresh', ['--force' => true]);
 
             // Step 3: Create admin user
-            User::create([
-                'username' => $request->admin_username,
-                'email' => $request->admin_email,
-                'password' => bcrypt($request->admin_password),
-                'first_name' => $request->admin_first_name,
-                'last_name' => $request->admin_last_name,
-                'role' => 'admin',
-                'auth_type' => 'local',
-                'is_active' => true,
-            ]);
+            User::updateOrCreate(
+                ['username' => $request->admin_username],
+                [
+                    'username' => $request->admin_username,
+                    'email' => $request->admin_email,
+                    'password' => bcrypt($request->admin_password),
+                    'first_name' => $request->admin_first_name,
+                    'last_name' => $request->admin_last_name,
+                    'role' => 'admin',
+                    'auth_type' => 'local',
+                    'is_active' => true,
+                ]
+            );
 
             // Step 4: Seed modules
             Artisan::call('db:seed', ['--class' => 'ModuleSeeder', '--force' => true]);
