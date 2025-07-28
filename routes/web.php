@@ -38,6 +38,9 @@ Route::middleware('auth')->group(function () {
     
     // IT Equipment routes
     Route::resource('it-equipment', \App\Http\Controllers\ITEquipmentController::class);
+    
+    // Employee routes
+    Route::resource('employees', \App\Http\Controllers\EmployeeController::class);
 });
 
 // Admin Routes
