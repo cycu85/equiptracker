@@ -102,8 +102,32 @@
                             </ul>
                         </li>
                         
+                        <!-- Height Equipment with submenu -->
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle {{ (request()->routeIs('height-equipment.*') || request()->routeIs('height-equipment-sets.*')) ? 'active' : '' }}" 
+                               href="#" role="button" data-toggle="submenu" 
+                               onclick="toggleSubmenu(event, 'height-equipment-submenu')">
+                                <i class="fas fa-hard-hat me-2"></i>
+                                Sprzęt wysokościowy
+                            </a>
+                            <ul class="nav flex-column submenu {{ (request()->routeIs('height-equipment.*') || request()->routeIs('height-equipment-sets.*')) ? 'show' : '' }}" id="height-equipment-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->routeIs('height-equipment.*') ? 'active' : '' }}" href="{{ route('height-equipment.index') }}">
+                                        <i class="fas fa-helmet-safety me-2"></i>
+                                        Elementy
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->routeIs('height-equipment-sets.*') ? 'active' : '' }}" href="{{ route('height-equipment-sets.index') }}">
+                                        <i class="fas fa-boxes me-2"></i>
+                                        Zestawy
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
                         @foreach($enabledModules ?? [] as $module)
-                            @if($module->name !== 'Tools' && $module->name !== 'Toolsets')
+                            @if(!in_array($module->name, ['Tools', 'Toolsets', 'HeightEquipment']))
                                 <li class="nav-item">
                                     <a class="nav-link {{ str_contains(request()->url(), $module->route_prefix) ? 'active' : '' }}" 
                                        href="{{ route($module->route_prefix . '.index') }}">
