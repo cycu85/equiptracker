@@ -18,20 +18,15 @@ class ToolController extends Controller
         return view('modules.tools.show', compact('tool'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('modules.tools.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $tool = Tool::create($request->all());
+        return redirect()->route('tools.show', $tool)->with('success', 'Narzędzie zostało dodane.');
     }
 
 
