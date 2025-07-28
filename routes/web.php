@@ -47,6 +47,9 @@ Route::middleware('auth')->group(function () {
     
     // Toolsets routes
     Route::resource('toolsets', \App\Http\Controllers\ToolsetController::class);
+    
+    // Height Equipment Sets routes
+    Route::resource('height-equipment-sets', \App\Http\Controllers\HeightEquipmentSetController::class);
 });
 
 // Admin Routes

@@ -54,4 +54,21 @@ class HeightEquipment extends Model
     {
         return $this->transfers()->where('status', 'active')->first();
     }
+
+    public function heightEquipmentSets()
+    {
+        return $this->belongsToMany(HeightEquipmentSet::class, 'height_equipment_set_items')
+                    ->withPivot(['quantity', 'is_required', 'notes'])
+                    ->withTimestamps();
+    }
+
+    public function getIsInSetAttribute()
+    {
+        return $this->heightEquipmentSets()->count() > 0;
+    }
+
+    public function getSetsListAttribute()
+    {
+        return $this->heightEquipmentSets()->pluck('name')->join(', ');
+    }
 }
