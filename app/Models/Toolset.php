@@ -51,10 +51,6 @@ class Toolset extends Model
     public function getCalculatedTotalValueAttribute()
     {
         return $this->tools()
-                    ->join('toolset_tools', function($join) {
-                        $join->on('tools.id', '=', 'toolset_tools.tool_id')
-                             ->where('toolset_tools.toolset_id', $this->id);
-                    })
                     ->sum(\DB::raw('COALESCE(tools.purchase_price, 0) * toolset_tools.quantity'));
     }
 
