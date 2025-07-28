@@ -78,56 +78,57 @@
                             </a>
                         </li>
                         
-                        <!-- Tools with submenu -->
-                        <li class="nav-item">
-                            <a class="nav-link dropdown-toggle {{ (request()->routeIs('tools.*') || request()->routeIs('toolsets.*')) ? 'active' : '' }}" 
-                               href="#" role="button" data-toggle="submenu" 
-                               onclick="toggleSubmenu(event, 'tools-submenu')">
-                                <i class="fas fa-tools me-2"></i>
-                                Narzędzia
-                            </a>
-                            <ul class="nav flex-column submenu {{ (request()->routeIs('tools.*') || request()->routeIs('toolsets.*')) ? 'show' : '' }}" id="tools-submenu">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('tools.*') ? 'active' : '' }}" href="{{ route('tools.index') }}">
-                                        <i class="fas fa-hammer me-2"></i>
-                                        Elementy
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('toolsets.*') ? 'active' : '' }}" href="{{ route('toolsets.index') }}">
-                                        <i class="fas fa-toolbox me-2"></i>
-                                        Zestawy
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                        <!-- Height Equipment with submenu -->
-                        <li class="nav-item">
-                            <a class="nav-link dropdown-toggle {{ (request()->routeIs('height-equipment.*') || request()->routeIs('height-equipment-sets.*')) ? 'active' : '' }}" 
-                               href="#" role="button" data-toggle="submenu" 
-                               onclick="toggleSubmenu(event, 'height-equipment-submenu')">
-                                <i class="fas fa-hard-hat me-2"></i>
-                                Sprzęt wysokościowy
-                            </a>
-                            <ul class="nav flex-column submenu {{ (request()->routeIs('height-equipment.*') || request()->routeIs('height-equipment-sets.*')) ? 'show' : '' }}" id="height-equipment-submenu">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('height-equipment.*') ? 'active' : '' }}" href="{{ route('height-equipment.index') }}">
-                                        <i class="fas fa-helmet-safety me-2"></i>
-                                        Elementy
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('height-equipment-sets.*') ? 'active' : '' }}" href="{{ route('height-equipment-sets.index') }}">
-                                        <i class="fas fa-boxes me-2"></i>
-                                        Zestawy
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        
                         @foreach($enabledModules ?? [] as $module)
-                            @if(!in_array($module->name, ['Tools', 'Toolsets', 'HeightEquipment']))
+                            @if($module->name === 'Tools')
+                                <!-- Tools with submenu -->
+                                <li class="nav-item">
+                                    <a class="nav-link dropdown-toggle {{ (request()->routeIs('tools.*') || request()->routeIs('toolsets.*')) ? 'active' : '' }}" 
+                                       href="#" role="button" data-toggle="submenu" 
+                                       onclick="toggleSubmenu(event, 'tools-submenu')">
+                                        <i class="{{ $module->icon }} me-2"></i>
+                                        {{ $module->display_name }}
+                                    </a>
+                                    <ul class="nav flex-column submenu {{ (request()->routeIs('tools.*') || request()->routeIs('toolsets.*')) ? 'show' : '' }}" id="tools-submenu">
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ request()->routeIs('tools.*') ? 'active' : '' }}" href="{{ route('tools.index') }}">
+                                                <i class="fas fa-hammer me-2"></i>
+                                                Elementy
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ request()->routeIs('toolsets.*') ? 'active' : '' }}" href="{{ route('toolsets.index') }}">
+                                                <i class="fas fa-toolbox me-2"></i>
+                                                Zestawy
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @elseif($module->name === 'HeightEquipment')
+                                <!-- Height Equipment with submenu -->
+                                <li class="nav-item">
+                                    <a class="nav-link dropdown-toggle {{ (request()->routeIs('height-equipment.*') || request()->routeIs('height-equipment-sets.*')) ? 'active' : '' }}" 
+                                       href="#" role="button" data-toggle="submenu" 
+                                       onclick="toggleSubmenu(event, 'height-equipment-submenu')">
+                                        <i class="{{ $module->icon }} me-2"></i>
+                                        {{ $module->display_name }}
+                                    </a>
+                                    <ul class="nav flex-column submenu {{ (request()->routeIs('height-equipment.*') || request()->routeIs('height-equipment-sets.*')) ? 'show' : '' }}" id="height-equipment-submenu">
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ request()->routeIs('height-equipment.*') ? 'active' : '' }}" href="{{ route('height-equipment.index') }}">
+                                                <i class="fas fa-helmet-safety me-2"></i>
+                                                Elementy
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ request()->routeIs('height-equipment-sets.*') ? 'active' : '' }}" href="{{ route('height-equipment-sets.index') }}">
+                                                <i class="fas fa-boxes me-2"></i>
+                                                Zestawy
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @else
+                                <!-- Regular single-level modules -->
                                 <li class="nav-item">
                                     <a class="nav-link {{ str_contains(request()->url(), $module->route_prefix) ? 'active' : '' }}" 
                                        href="{{ route($module->route_prefix . '.index') }}">
