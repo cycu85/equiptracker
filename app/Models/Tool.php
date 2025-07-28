@@ -43,4 +43,21 @@ class Tool extends Model
     {
         return $this->transfers()->where('status', 'active')->first();
     }
+
+    public function toolsets()
+    {
+        return $this->belongsToMany(Toolset::class, 'toolset_tools')
+                    ->withPivot(['quantity', 'is_required', 'notes'])
+                    ->withTimestamps();
+    }
+
+    public function getIsInToolsetAttribute()
+    {
+        return $this->toolsets()->count() > 0;
+    }
+
+    public function getToolsetsListAttribute()
+    {
+        return $this->toolsets()->pluck('name')->join(', ');
+    }
 }

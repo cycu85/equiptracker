@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
     
     // Tools routes
     Route::resource('tools', \App\Http\Controllers\ToolController::class);
+    
+    // Toolsets routes
+    Route::resource('toolsets', \App\Http\Controllers\ToolsetController::class);
 });
 
 // Admin Routes
