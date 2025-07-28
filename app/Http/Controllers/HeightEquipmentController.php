@@ -9,7 +9,7 @@ class HeightEquipmentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = HeightEquipment::query();
+        $query = HeightEquipment::query()->with(['heightEquipmentSets']);
 
         // Filtering
         if ($request->filled('search')) {
@@ -64,6 +64,7 @@ class HeightEquipmentController extends Controller
 
     public function show(HeightEquipment $heightEquipment)
     {
+        $heightEquipment->load(['heightEquipmentSets']);
         return view('height-equipment.show', compact('heightEquipment'));
     }
 

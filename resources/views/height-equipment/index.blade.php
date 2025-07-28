@@ -69,6 +69,7 @@
                             <x-sortable-header field="type" title="Typ" />
                             <x-sortable-header field="status" title="Status" />
                             <x-sortable-header field="location" title="Lokalizacja" />
+                            <th>Zestawy</th>
                             <th>Następny przegląd</th>
                         </tr>
                     </thead>
@@ -114,6 +115,19 @@
                                 @endswitch
                             </td>
                             <td>{{ $equipment->location ?? 'Nieznana' }}</td>
+                            <td>
+                                @if($equipment->heightEquipmentSets->count() > 0)
+                                    <span class="badge bg-info">{{ $equipment->heightEquipmentSets->count() }}</span>
+                                    <small class="text-muted d-block">
+                                        {{ $equipment->heightEquipmentSets->pluck('name')->take(2)->join(', ') }}
+                                        @if($equipment->heightEquipmentSets->count() > 2)
+                                            <br>+{{ $equipment->heightEquipmentSets->count() - 2 }} więcej
+                                        @endif
+                                    </small>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
                             <td>
                                 @if($equipment->next_inspection_date)
                                     <span class="text-{{ $equipment->next_inspection_date->isPast() ? 'danger' : ($equipment->next_inspection_date->diffInDays() < 30 ? 'warning' : 'muted') }}">

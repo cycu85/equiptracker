@@ -193,6 +193,72 @@
                 </div>
             </div>
         @endif
+
+        <!-- Set Membership -->
+        @if($heightEquipment->heightEquipmentSets->count() > 0)
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-boxes"></i> Członkostwo w zestawach</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Zestaw</th>
+                                <th>Ilość</th>
+                                <th>Typ</th>
+                                <th>Status zestawu</th>
+                                <th>Notatki</th>
+                                <th>Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($heightEquipment->heightEquipmentSets as $set)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('height-equipment-sets.show', $set) }}" class="text-decoration-none">
+                                            <strong>{{ $set->name }}</strong>
+                                        </a>
+                                        @if($set->code)
+                                            <br><small class="text-muted">Kod: {{ $set->code }}</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info">{{ $set->pivot->quantity }}</span>
+                                    </td>
+                                    <td>
+                                        @if($set->pivot->is_required)
+                                            <span class="badge bg-danger">Wymagane</span>
+                                        @else
+                                            <span class="badge bg-secondary">Opcjonalne</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ $set->status_badge }}">
+                                            {{ $set->status_label }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if($set->pivot->notes)
+                                            <small class="text-muted">{{ $set->pivot->notes }}</small>
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('height-equipment-sets.show', $set) }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
     
     <div class="col-md-4">
