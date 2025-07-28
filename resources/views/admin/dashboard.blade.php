@@ -211,6 +211,12 @@
                         </a>
                     </div>
                     <div class="col-md-3 mb-2">
+                        <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-danger w-100">
+                            <i class="fas fa-user-shield d-block mb-2"></i>
+                            Zarządzanie rolami
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
                         <a href="{{ route('admin.modules') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-puzzle-piece d-block mb-2"></i>
                             Zarządzaj modułami
@@ -229,7 +235,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row">
                     <div class="col-md-6 mx-auto">
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary w-100">
                             <i class="fas fa-arrow-left d-block mb-2"></i>

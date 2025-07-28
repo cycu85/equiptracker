@@ -38,18 +38,21 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="role" class="form-label">Rola <span class="text-danger">*</span></label>
-                        <select class="form-select @error('role') is-invalid @enderror" id="role" name="role" required
+                        <label for="role_id" class="form-label">Rola <span class="text-danger">*</span></label>
+                        <select class="form-select @error('role_id') is-invalid @enderror" id="role_id" name="role_id" required
                                 @if($user->id === auth()->id()) disabled @endif>
                             <option value="">Wybierz rolę</option>
-                            <option value="user" {{ old('role', $user->role) == 'user' ? 'selected' : '' }}>Użytkownik</option>
-                            <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Administrator</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
+                                    {{ $role->display_name }}
+                                </option>
+                            @endforeach
                         </select>
                         @if($user->id === auth()->id())
-                            <input type="hidden" name="role" value="{{ $user->role }}">
+                            <input type="hidden" name="role_id" value="{{ $user->role_id }}">
                             <small class="text-muted">Nie możesz zmienić swojej własnej roli.</small>
                         @endif
-                        @error('role')
+                        @error('role_id')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -82,20 +85,21 @@
             <div class="card-body">
                 <h6>Edytowane konto</h6>
                 <div class="d-flex align-items-center mb-3">
-                    <i class="fas fa-user-circle fa-3x text-{{ $user->role === 'admin' ? 'danger' : 'primary' }} me-3"></i>
+                    <i class="fas fa-user-circle fa-3x text-{{ $user->role && $user->role->name === 'administrator' ? 'danger' : 'primary' }} me-3"></i>
                     <div>
                         <strong>{{ $user->name }}</strong><br>
                         <small class="text-muted">{{ $user->email }}</small><br>
-                        <span class="badge bg-{{ $user->role === 'admin' ? 'danger' : 'primary' }}">
-                            {{ $user->role === 'admin' ? 'Administrator' : 'Użytkownik' }}
+                        <span class="badge bg-{{ $user->role && $user->role->name === 'administrator' ? 'danger' : 'primary' }}">
+                            {{ $user->role ? $user->role->display_name : 'Brak roli' }}
                         </span>
                     </div>
                 </div>
                 
-                <h6 class="mt-3">Role użytkowników</h6>
+                <h6 class="mt-3">Dostępne role</h6>
                 <ul class="small">
-                    <li><strong>Użytkownik:</strong> Podstawowy dostęp do systemu</li>
-                    <li><strong>Administrator:</strong> Pełny dostęp do panelu administracyjnego</li>
+                    @foreach($roles as $role)
+                        <li><strong>{{ $role->display_name }}:</strong> {{ $role->description }}</li>
+                    @endforeach
                 </ul>
                 
                 <h6 class="mt-3">Statystyki</h6>

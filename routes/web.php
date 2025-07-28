@@ -58,6 +58,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware
     // User Management Routes
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
     Route::post('/users/{user}/reset-password', [\App\Http\Controllers\Admin\UserController::class, 'resetPassword'])->name('users.reset-password');
+    
+    // Role Management Routes
+    Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
 });
 
 // Install Routes
