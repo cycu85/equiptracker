@@ -53,6 +53,8 @@ Route::middleware('auth')->group(function () {
     
     // Height Equipment Sets routes
     Route::resource('height-equipment-sets', \App\Http\Controllers\HeightEquipmentSetController::class);
+    Route::get('/height-equipment-sets-inspections', [\App\Http\Controllers\HeightEquipmentSetController::class, 'inspections'])->name('height-equipment-sets.inspections');
+    Route::put('/height-equipment-sets/{heightEquipmentSet}/inspection', [\App\Http\Controllers\HeightEquipmentSetController::class, 'updateSetInspection'])->name('height-equipment-sets.update-inspection');
 });
 
 // Admin Routes

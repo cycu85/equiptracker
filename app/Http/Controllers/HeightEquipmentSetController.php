@@ -161,4 +161,85 @@ class HeightEquipmentSetController extends Controller
         return redirect()->route('height-equipment-sets.index')
                          ->with('success', 'Zestaw sprzętu wysokościowego został usunięty pomyślnie.');
     }
+
+    public function updateSetInspection(Request $request, HeightEquipmentSet $heightEquipmentSet)
+    {
+        $validatedData = $request->validate([
+            'last_inspection_date' => 'required|date',
+            'next_inspection_date' => 'required|date|after:last_inspection_date',
+            'inspection_notes' => 'nullable|string',
+        ]);
+
+        $inspectionNote = now()->format('Y-m-d') . " - Przegląd zestawu: " . ($validatedData['inspection_notes'] ?? 'Wykonano przegląd całego zestawu');
+        $equipmentCount = 0;
+
+        // Update all equipment in the set
+        foreach ($heightEquipmentSet->heightEquipment as $equipment) {
+            $equipment->update([
+                'last_inspection_date' => $validatedData['last_inspection_date'],
+                'next_inspection_date' => $validatedData['next_inspection_date'],
+                'notes' => $equipment->notes . "\n\n" . $inspectionNote,
+            ]);
+            $equipmentCount++;
+        }
+
+        // Update the set itself with inspection info
+        $heightEquipmentSet->update([
+            'notes' => $heightEquipmentSet->notes . "\n\n" . $inspectionNote . " (zaktualizowano {$equipmentCount} elementów)",
+        ]);
+
+        return redirect()->back()->with('success', "Przegląd zestawu został zarejestrowany. Zaktualizowano {$equipmentCount} elementów sprzętu.");
+    }
+
+    public function inspections(Request $request)
+    {
+        $query = HeightEquipmentSet::query()->with(['heightEquipment']);
+
+        // Filter by inspection status based on the equipment in sets
+        if ($request->filled('filter')) {
+            $filter = $request->filter;
+            switch ($filter) {
+                case 'overdue':
+                    $query->whereHas('heightEquipment', function($q) {
+                        $q->where('next_inspection_date', '<', now());
+                    });
+                    break;
+                case 'due_soon':
+                    $query->whereHas('heightEquipment', function($q) {
+                        $q->whereBetween('next_inspection_date', [now(), now()->addDays(30)]);
+                    });
+                    break;
+                case 'upcoming':
+                    $query->whereHas('heightEquipment', function($q) {
+                        $q->whereBetween('next_inspection_date', [now()->addDays(30), now()->addDays(90)]);
+                    });
+                    break;
+                case 'no_date':
+                    $query->whereHas('heightEquipment', function($q) {
+                        $q->whereNull('next_inspection_date');
+                    });
+                    break;
+            }
+        }
+
+        $heightEquipmentSets = $query->orderBy('name')->paginate(20);
+
+        // Statistics
+        $stats = [
+            'overdue' => HeightEquipmentSet::whereHas('heightEquipment', function($q) {
+                $q->where('next_inspection_date', '<', now());
+            })->count(),
+            'due_soon' => HeightEquipmentSet::whereHas('heightEquipment', function($q) {
+                $q->whereBetween('next_inspection_date', [now(), now()->addDays(30)]);
+            })->count(),
+            'upcoming' => HeightEquipmentSet::whereHas('heightEquipment', function($q) {
+                $q->whereBetween('next_inspection_date', [now()->addDays(30), now()->addDays(90)]);
+            })->count(),
+            'no_date' => HeightEquipmentSet::whereHas('heightEquipment', function($q) {
+                $q->whereNull('next_inspection_date');
+            })->count(),
+        ];
+
+        return view('height-equipment-sets.inspections', compact('heightEquipmentSets', 'stats'));
+    }
 }
