@@ -98,9 +98,9 @@
                                             <div class="col-md-4">
                                                 <select class="form-select" name="equipment[{{ $index }}][height_equipment_id]">
                                                     <option value="">Wybierz sprzęt</option>
-                                                    @foreach($availableEquipment as $availableEquipment)
-                                                        <option value="{{ $availableEquipment->id }}" {{ $equipment->id == $availableEquipment->id ? 'selected' : '' }}>
-                                                            {{ $availableEquipment->name }} ({{ $availableEquipment->brand }} {{ $availableEquipment->model }})
+                                                    @foreach($availableEquipment as $available)
+                                                        <option value="{{ $available->id }}" {{ $equipment->id == $available->id ? 'selected' : '' }}>
+                                                            {{ $available->name }} ({{ $available->brand }} {{ $available->model }})
                                                         </option>
                                                     @endforeach
                                                 </select>
