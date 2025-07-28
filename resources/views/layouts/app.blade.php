@@ -22,52 +22,138 @@
     @endauth
     
     <style>
-        .sidebar {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
-            transition: all 0.3s;
-            border-radius: 5px;
-            margin: 2px 8px;
-        }
-        .sidebar .nav-link:hover,
-        .sidebar .nav-link.active {
-            color: #fff;
-            background-color: rgba(255,255,255,0.1);
-        }
-        .sidebar .nav-link.dropdown-toggle::after {
-            float: right;
-            margin-top: 8px;
-        }
-        .sidebar .submenu {
-            padding-left: 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        .sidebar .submenu.show {
-            max-height: 500px;
-        }
-        .sidebar .submenu .nav-link {
-            font-size: 0.9em;
-            padding: 8px 15px;
-            margin: 1px 8px;
-        }
-        .sidebar .submenu .nav-link:hover,
-        .sidebar .submenu .nav-link.active {
-            background-color: rgba(255,255,255,0.15);
-        }
-        .main-content {
-            background-color: #f8f9fa;
-            min-height: 100vh;
-        }
-        .navbar-brand {
-            font-weight: 700;
-            color: #667eea;
-        }
+        @auth
+            @if((auth()->user()->theme_preference ?? 'default') === 'default')
+                .sidebar {
+                    min-height: 100vh;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                }
+                .sidebar .nav-link {
+                    color: rgba(255,255,255,0.8);
+                    transition: all 0.3s;
+                    border-radius: 5px;
+                    margin: 2px 8px;
+                }
+                .sidebar .nav-link:hover,
+                .sidebar .nav-link.active {
+                    color: #fff;
+                    background-color: rgba(255,255,255,0.1);
+                }
+                .sidebar .nav-link.dropdown-toggle::after {
+                    float: right;
+                    margin-top: 8px;
+                }
+                .sidebar .submenu {
+                    padding-left: 20px;
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: max-height 0.3s ease;
+                }
+                .sidebar .submenu.show {
+                    max-height: 500px;
+                }
+                .sidebar .submenu .nav-link {
+                    font-size: 0.9em;
+                    padding: 8px 15px;
+                    margin: 1px 8px;
+                }
+                .sidebar .submenu .nav-link:hover,
+                .sidebar .submenu .nav-link.active {
+                    background-color: rgba(255,255,255,0.15);
+                }
+                .main-content {
+                    background-color: #f8f9fa;
+                    min-height: 100vh;
+                }
+                .navbar-brand {
+                    font-weight: 700;
+                    color: #667eea;
+                }
+            @endif
+        @else
+            .sidebar {
+                min-height: 100vh;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            }
+            .sidebar .nav-link {
+                color: rgba(255,255,255,0.8);
+                transition: all 0.3s;
+                border-radius: 5px;
+                margin: 2px 8px;
+            }
+            .sidebar .nav-link:hover,
+            .sidebar .nav-link.active {
+                color: #fff;
+                background-color: rgba(255,255,255,0.1);
+            }
+            .sidebar .nav-link.dropdown-toggle::after {
+                float: right;
+                margin-top: 8px;
+            }
+            .sidebar .submenu {
+                padding-left: 20px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            .sidebar .submenu.show {
+                max-height: 500px;
+            }
+            .sidebar .submenu .nav-link {
+                font-size: 0.9em;
+                padding: 8px 15px;
+                margin: 1px 8px;
+            }
+            .sidebar .submenu .nav-link:hover,
+            .sidebar .submenu .nav-link.active {
+                background-color: rgba(255,255,255,0.15);
+            }
+            .main-content {
+                background-color: #f8f9fa;
+                min-height: 100vh;
+            }
+            .navbar-brand {
+                font-weight: 700;
+                color: #667eea;
+            }
+        @endauth
     </style>
+    
+    @auth
+        @if((auth()->user()->theme_preference ?? 'default') === 'velzon')
+            <!-- Velzon Theme Override Styles -->
+            <style>
+                .sidebar {
+                    background: #2a3042 !important;
+                    box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
+                    border-right: 1px solid rgba(255, 255, 255, 0.1);
+                }
+                .sidebar .nav-link {
+                    color: rgba(255, 255, 255, 0.8) !important;
+                    padding: 0.75rem 1.25rem !important;
+                    margin: 0.125rem 0.75rem !important;
+                    border-radius: 0.375rem !important;
+                    transition: all 0.15s ease-in-out !important;
+                    font-weight: 500 !important;
+                }
+                .sidebar .nav-link:hover,
+                .sidebar .nav-link.active {
+                    color: #fff !important;
+                    background-color: rgba(255, 255, 255, 0.1) !important;
+                    transform: translateX(2px);
+                }
+                .sidebar .submenu .nav-link {
+                    padding-left: 2.5rem !important;
+                    font-size: 0.875rem !important;
+                    color: rgba(255, 255, 255, 0.7) !important;
+                }
+                .sidebar .submenu .nav-link:hover,
+                .sidebar .submenu .nav-link.active {
+                    background-color: rgba(255, 255, 255, 0.15) !important;
+                }
+            </style>
+        @endif
+    @endauth
 </head>
 <body>
     <div class="container-fluid">
