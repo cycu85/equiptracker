@@ -35,27 +35,20 @@ class ToolController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Tool $tool)
     {
-        //
+        return view('modules.tools.edit', compact('tool'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Tool $tool)
     {
-        //
+        $tool->update($request->all());
+        return redirect()->route('tools.show', $tool)->with('success', 'Narzędzie zostało zaktualizowane.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Tool $tool)
     {
-        //
+        $tool->delete();
+        return redirect()->route('tools.index')->with('success', 'Narzędzie zostało usunięte.');
     }
 }
