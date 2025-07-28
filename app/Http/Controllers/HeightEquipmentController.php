@@ -9,55 +9,40 @@ class HeightEquipmentController extends Controller
 {
     public function index()
     {
-        $heightEquipment = HeightEquipment::all();
+        $heightEquipment = HeightEquipment::paginate(15);
         return view('height-equipment.index', compact('heightEquipment'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('height-equipment.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $equipment = HeightEquipment::create($request->all());
+        return redirect()->route('height-equipment.show', $equipment)->with('success', 'Sprzęt wysokościowy został dodany.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(HeightEquipment $heightEquipment)
     {
-        //
+        return view('height-equipment.show', compact('heightEquipment'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(HeightEquipment $heightEquipment)
     {
-        //
+        return view('height-equipment.edit', compact('heightEquipment'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, HeightEquipment $heightEquipment)
     {
-        //
+        $heightEquipment->update($request->all());
+        return redirect()->route('height-equipment.show', $heightEquipment)->with('success', 'Sprzęt wysokościowy został zaktualizowany.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(HeightEquipment $heightEquipment)
     {
-        //
+        $heightEquipment->delete();
+        return redirect()->route('height-equipment.index')->with('success', 'Sprzęt wysokościowy został usunięty.');
     }
 }
