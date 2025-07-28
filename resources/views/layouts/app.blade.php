@@ -20,11 +20,35 @@
         .sidebar .nav-link {
             color: rgba(255,255,255,0.8);
             transition: all 0.3s;
+            border-radius: 5px;
+            margin: 2px 8px;
         }
         .sidebar .nav-link:hover,
         .sidebar .nav-link.active {
             color: #fff;
             background-color: rgba(255,255,255,0.1);
+        }
+        .sidebar .nav-link.dropdown-toggle::after {
+            float: right;
+            margin-top: 8px;
+        }
+        .sidebar .submenu {
+            padding-left: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .sidebar .submenu.show {
+            max-height: 500px;
+        }
+        .sidebar .submenu .nav-link {
+            font-size: 0.9em;
+            padding: 8px 15px;
+            margin: 1px 8px;
+        }
+        .sidebar .submenu .nav-link:hover,
+        .sidebar .submenu .nav-link.active {
+            background-color: rgba(255,255,255,0.15);
         }
         .main-content {
             background-color: #f8f9fa;
@@ -54,14 +78,40 @@
                             </a>
                         </li>
                         
+                        <!-- Tools with submenu -->
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle {{ (request()->routeIs('tools.*') || request()->routeIs('toolsets.*')) ? 'active' : '' }}" 
+                               href="#" role="button" data-toggle="submenu" 
+                               onclick="toggleSubmenu(event, 'tools-submenu')">
+                                <i class="fas fa-tools me-2"></i>
+                                Narzędzia
+                            </a>
+                            <ul class="nav flex-column submenu {{ (request()->routeIs('tools.*') || request()->routeIs('toolsets.*')) ? 'show' : '' }}" id="tools-submenu">
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->routeIs('tools.*') ? 'active' : '' }}" href="{{ route('tools.index') }}">
+                                        <i class="fas fa-hammer me-2"></i>
+                                        Elementy
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {{ request()->routeIs('toolsets.*') ? 'active' : '' }}" href="{{ route('toolsets.index') }}">
+                                        <i class="fas fa-toolbox me-2"></i>
+                                        Zestawy
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
                         @foreach($enabledModules ?? [] as $module)
-                            <li class="nav-item">
-                                <a class="nav-link {{ str_contains(request()->url(), $module->route_prefix) ? 'active' : '' }}" 
-                                   href="{{ route($module->route_prefix . '.index') }}">
-                                    <i class="{{ $module->icon }} me-2"></i>
-                                    {{ $module->display_name }}
-                                </a>
-                            </li>
+                            @if($module->name !== 'Tools' && $module->name !== 'Toolsets')
+                                <li class="nav-item">
+                                    <a class="nav-link {{ str_contains(request()->url(), $module->route_prefix) ? 'active' : '' }}" 
+                                       href="{{ route($module->route_prefix . '.index') }}">
+                                        <i class="{{ $module->icon }} me-2"></i>
+                                        {{ $module->display_name }}
+                                    </a>
+                                </li>
+                            @endif
                         @endforeach
                         
                         @auth
@@ -145,6 +195,44 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Submenu functionality -->
+    <script>
+        function toggleSubmenu(event, submenuId) {
+            event.preventDefault();
+            const submenu = document.getElementById(submenuId);
+            const toggle = event.currentTarget;
+            
+            if (submenu.classList.contains('show')) {
+                submenu.classList.remove('show');
+                toggle.classList.remove('active');
+            } else {
+                // Close all other submenus
+                document.querySelectorAll('.submenu.show').forEach(function(menu) {
+                    menu.classList.remove('show');
+                });
+                document.querySelectorAll('.dropdown-toggle.active').forEach(function(toggle) {
+                    toggle.classList.remove('active');
+                });
+                
+                // Open this submenu
+                submenu.classList.add('show');
+                toggle.classList.add('active');
+            }
+        }
+        
+        // Auto-expand submenu if current page is in submenu
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeSubmenu = document.querySelector('.submenu .nav-link.active');
+            if (activeSubmenu) {
+                const submenu = activeSubmenu.closest('.submenu');
+                const toggle = submenu.previousElementSibling;
+                submenu.classList.add('show');
+                toggle.classList.add('active');
+            }
+        });
+    </script>
+    
     @yield('scripts')
 </body>
 </html>
