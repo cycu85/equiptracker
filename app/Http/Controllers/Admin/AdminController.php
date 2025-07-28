@@ -15,16 +15,6 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware(function ($request, $next) {
-            if (auth()->user()->role !== 'admin') {
-                abort(403, 'Brak uprawnień administracyjnych');
-            }
-            return $next($request);
-        });
-    }
 
     public function dashboard()
     {

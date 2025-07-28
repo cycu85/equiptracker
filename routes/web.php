@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Routes
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Admin\AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/modules', [\App\Http\Controllers\Admin\AdminController::class, 'modules'])->name('modules');
     Route::put('/modules/{module}', [\App\Http\Controllers\Admin\AdminController::class, 'updateModule'])->name('modules.update');
