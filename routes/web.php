@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     
     // Height Equipment routes
     Route::resource('height-equipment', \App\Http\Controllers\HeightEquipmentController::class);
+    
+    // IT Equipment routes
+    Route::resource('it-equipment', \App\Http\Controllers\ITEquipmentController::class);
 });
 
 // Admin Routes
