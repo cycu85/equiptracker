@@ -72,9 +72,9 @@
                                 <label for="category" class="form-label">Kategoria</label>
                                 <select class="form-select @error('category') is-invalid @enderror" id="category" name="category">
                                     <option value="">Wybierz kategorię</option>
-                                    <option value="narzędzia ręczne" {{ old('category', $tool->category) == 'narzędzia ręczne' ? 'selected' : '' }}>Narzędzia ręczne</option>
-                                    <option value="elektronarzędzia" {{ old('category', $tool->category) == 'elektronarzędzia' ? 'selected' : '' }}>Elektronarzędzia</option>
-                                    <option value="maszyny" {{ old('category', $tool->category) == 'maszyny' ? 'selected' : '' }}>Maszyny</option>
+                                    @foreach($categories as $key => $value)
+                                        <option value="{{ $key }}" {{ old('category', $tool->category) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                    @endforeach
                                 </select>
                                 @error('category')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -86,11 +86,9 @@
                             <div class="mb-3">
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
-                                    <option value="available" {{ old('status', $tool->status) == 'available' ? 'selected' : '' }}>Dostępne</option>
-                                    <option value="in_use" {{ old('status', $tool->status) == 'in_use' ? 'selected' : '' }}>W użyciu</option>
-                                    <option value="maintenance" {{ old('status', $tool->status) == 'maintenance' ? 'selected' : '' }}>Naprawa</option>
-                                    <option value="damaged" {{ old('status', $tool->status) == 'damaged' ? 'selected' : '' }}>Uszkodzone</option>
-                                    <option value="retired" {{ old('status', $tool->status) == 'retired' ? 'selected' : '' }}>Wycofane</option>
+                                    @foreach($statuses as $key => $value)
+                                        <option value="{{ $key }}" {{ old('status', $tool->status) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                    @endforeach
                                 </select>
                                 @error('status')
                                     <div class="invalid-feedback">{{ $message }}</div>

@@ -23,19 +23,18 @@
                 <label for="category" class="form-label">Kategoria</label>
                 <select class="form-select" id="category" name="category">
                     <option value="">Wszystkie</option>
-                    <option value="narzędzia ręczne" {{ request('category') == 'narzędzia ręczne' ? 'selected' : '' }}>Narzędzia ręczne</option>
-                    <option value="elektronarzędzia" {{ request('category') == 'elektronarzędzia' ? 'selected' : '' }}>Elektronarzędzia</option>
-                    <option value="maszyny" {{ request('category') == 'maszyny' ? 'selected' : '' }}>Maszyny</option>
+                    @foreach($categories as $key => $value)
+                        <option value="{{ $key }}" {{ request('category') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-2">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status">
                     <option value="">Wszystkie</option>
-                    <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>Dostępne</option>
-                    <option value="in_use" {{ request('status') == 'in_use' ? 'selected' : '' }}>W użyciu</option>
-                    <option value="maintenance" {{ request('status') == 'maintenance' ? 'selected' : '' }}>Naprawa</option>
-                    <option value="damaged" {{ request('status') == 'damaged' ? 'selected' : '' }}>Uszkodzone</option>
+                    @foreach($statuses as $key => $value)
+                        <option value="{{ $key }}" {{ request('status') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3">

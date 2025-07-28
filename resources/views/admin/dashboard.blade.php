@@ -223,6 +223,12 @@
                         </a>
                     </div>
                     <div class="col-md-3 mb-2">
+                        <a href="{{ route('admin.dictionaries.index') }}" class="btn btn-outline-secondary w-100">
+                            <i class="fas fa-book d-block mb-2"></i>
+                            Zarządzanie słownikami
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
                         <a href="{{ route('admin.data-management') }}" class="btn btn-outline-warning w-100">
                             <i class="fas fa-database d-block mb-2"></i>
                             Zarządzanie danymi

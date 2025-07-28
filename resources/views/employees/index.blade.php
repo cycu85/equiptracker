@@ -23,18 +23,18 @@
                 <label for="department" class="form-label">Dział</label>
                 <select class="form-select" id="department" name="department">
                     <option value="">Wszystkie</option>
-                    <option value="IT" {{ request('department') == 'IT' ? 'selected' : '' }}>IT</option>
-                    <option value="HR" {{ request('department') == 'HR' ? 'selected' : '' }}>HR</option>
-                    <option value="Produkcja" {{ request('department') == 'Produkcja' ? 'selected' : '' }}>Produkcja</option>
-                    <option value="Biuro" {{ request('department') == 'Biuro' ? 'selected' : '' }}>Biuro</option>
+                    @foreach($departments as $key => $value)
+                        <option value="{{ $key }}" {{ request('department') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-2">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status">
                     <option value="">Wszystkie</option>
-                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktywny</option>
-                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Nieaktywny</option>
+                    @foreach($statuses as $key => $value)
+                        <option value="{{ $key }}" {{ request('status') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3">

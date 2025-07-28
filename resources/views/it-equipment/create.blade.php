@@ -31,14 +31,9 @@
                             <label for="type" class="form-label">Typ <span class="text-danger">*</span></label>
                             <select class="form-select @error('type') is-invalid @enderror" id="type" name="type" required>
                                 <option value="">Wybierz typ</option>
-                                <option value="laptop" {{ old('type') == 'laptop' ? 'selected' : '' }}>Laptop</option>
-                                <option value="desktop" {{ old('type') == 'desktop' ? 'selected' : '' }}>Komputer</option>
-                                <option value="monitor" {{ old('type') == 'monitor' ? 'selected' : '' }}>Monitor</option>
-                                <option value="printer" {{ old('type') == 'printer' ? 'selected' : '' }}>Drukarka</option>
-                                <option value="server" {{ old('type') == 'server' ? 'selected' : '' }}>Serwer</option>
-                                <option value="tablet" {{ old('type') == 'tablet' ? 'selected' : '' }}>Tablet</option>
-                                <option value="phone" {{ old('type') == 'phone' ? 'selected' : '' }}>Telefon</option>
-                                <option value="other" {{ old('type') == 'other' ? 'selected' : '' }}>Inne</option>
+                                @foreach($types as $key => $value)
+                                    <option value="{{ $key }}" {{ old('type') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
                             </select>
                             @error('type')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -84,9 +79,12 @@
                         </div>
                         <div class="col-md-6">
                             <label for="operating_system" class="form-label">System operacyjny</label>
-                            <input type="text" class="form-control @error('operating_system') is-invalid @enderror" 
-                                   id="operating_system" name="operating_system" value="{{ old('operating_system') }}"
-                                   placeholder="np. Windows 11, macOS, Linux">
+                            <select class="form-select @error('operating_system') is-invalid @enderror" id="operating_system" name="operating_system">
+                                <option value="">Wybierz system</option>
+                                @foreach($operatingSystems as $key => $value)
+                                    <option value="{{ $key }}" {{ old('operating_system') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
+                            </select>
                             @error('operating_system')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -117,10 +115,9 @@
                         <div class="col-md-6">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                                <option value="active" {{ old('status', 'active') == 'active' ? 'selected' : '' }}>Aktywne</option>
-                                <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Nieaktywne</option>
-                                <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Naprawa</option>
-                                <option value="retired" {{ old('status') == 'retired' ? 'selected' : '' }}>Wycofane</option>
+                                @foreach($statuses as $key => $value)
+                                    <option value="{{ $key }}" {{ old('status', 'active') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
                             </select>
                             @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>

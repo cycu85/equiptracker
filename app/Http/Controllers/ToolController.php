@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tool;
+use App\Models\Dictionary;
 use Illuminate\Http\Request;
 
 class ToolController extends Controller
@@ -48,7 +49,11 @@ class ToolController extends Controller
 
         $tools = $query->paginate(15)->appends($request->query());
         
-        return view('modules.tools.index', compact('tools'));
+        // Get dictionary options for filters
+        $categories = Dictionary::getOptions('tool_categories');
+        $statuses = Dictionary::getOptions('tool_statuses');
+        
+        return view('modules.tools.index', compact('tools', 'categories', 'statuses'));
     }
 
     public function show(Tool $tool)
@@ -59,7 +64,10 @@ class ToolController extends Controller
 
     public function create()
     {
-        return view('modules.tools.create');
+        $categories = Dictionary::getOptions('tool_categories');
+        $statuses = Dictionary::getOptions('tool_statuses');
+        
+        return view('modules.tools.create', compact('categories', 'statuses'));
     }
 
     public function store(Request $request)
@@ -71,7 +79,10 @@ class ToolController extends Controller
 
     public function edit(Tool $tool)
     {
-        return view('modules.tools.edit', compact('tool'));
+        $categories = Dictionary::getOptions('tool_categories');
+        $statuses = Dictionary::getOptions('tool_statuses');
+        
+        return view('modules.tools.edit', compact('tool', 'categories', 'statuses'));
     }
 
     public function update(Request $request, Tool $tool)

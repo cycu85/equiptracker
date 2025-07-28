@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ITEquipment;
+use App\Models\Dictionary;
 use Illuminate\Http\Request;
 
 class ITEquipmentController extends Controller
@@ -49,12 +50,21 @@ class ITEquipmentController extends Controller
 
         $itEquipment = $query->paginate(15)->appends($request->query());
         
-        return view('it-equipment.index', compact('itEquipment'));
+        // Get dictionary options for filters
+        $types = Dictionary::getOptions('it_equipment_types');
+        $statuses = Dictionary::getOptions('it_equipment_statuses');
+        $operatingSystems = Dictionary::getOptions('it_operating_systems');
+        
+        return view('it-equipment.index', compact('itEquipment', 'types', 'statuses', 'operatingSystems'));
     }
 
     public function create()
     {
-        return view('it-equipment.create');
+        $types = Dictionary::getOptions('it_equipment_types');
+        $statuses = Dictionary::getOptions('it_equipment_statuses');
+        $operatingSystems = Dictionary::getOptions('it_operating_systems');
+        
+        return view('it-equipment.create', compact('types', 'statuses', 'operatingSystems'));
     }
 
     public function store(Request $request)
@@ -70,7 +80,11 @@ class ITEquipmentController extends Controller
 
     public function edit(ITEquipment $itEquipment)
     {
-        return view('it-equipment.edit', compact('itEquipment'));
+        $types = Dictionary::getOptions('it_equipment_types');
+        $statuses = Dictionary::getOptions('it_equipment_statuses');
+        $operatingSystems = Dictionary::getOptions('it_operating_systems');
+        
+        return view('it-equipment.edit', compact('itEquipment', 'types', 'statuses', 'operatingSystems'));
     }
 
     public function update(Request $request, ITEquipment $itEquipment)

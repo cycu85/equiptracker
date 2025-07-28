@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\HeightEquipment;
+use App\Models\Dictionary;
 use Illuminate\Http\Request;
 
 class HeightEquipmentController extends Controller
@@ -48,12 +49,19 @@ class HeightEquipmentController extends Controller
 
         $heightEquipment = $query->paginate(15)->appends($request->query());
         
-        return view('height-equipment.index', compact('heightEquipment'));
+        // Get dictionary options for filters
+        $types = Dictionary::getOptions('height_equipment_types');
+        $statuses = Dictionary::getOptions('height_equipment_statuses');
+        
+        return view('height-equipment.index', compact('heightEquipment', 'types', 'statuses'));
     }
 
     public function create()
     {
-        return view('height-equipment.create');
+        $types = Dictionary::getOptions('height_equipment_types');
+        $statuses = Dictionary::getOptions('height_equipment_statuses');
+        
+        return view('height-equipment.create', compact('types', 'statuses'));
     }
 
     public function store(Request $request)
@@ -70,7 +78,10 @@ class HeightEquipmentController extends Controller
 
     public function edit(HeightEquipment $heightEquipment)
     {
-        return view('height-equipment.edit', compact('heightEquipment'));
+        $types = Dictionary::getOptions('height_equipment_types');
+        $statuses = Dictionary::getOptions('height_equipment_statuses');
+        
+        return view('height-equipment.edit', compact('heightEquipment', 'types', 'statuses'));
     }
 
     public function update(Request $request, HeightEquipment $heightEquipment)

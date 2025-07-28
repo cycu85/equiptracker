@@ -23,19 +23,18 @@
                 <label for="type" class="form-label">Typ</label>
                 <select class="form-select" id="type" name="type">
                     <option value="">Wszystkie</option>
-                    <option value="ladder" {{ request('type') == 'ladder' ? 'selected' : '' }}>Drabina</option>
-                    <option value="scaffold" {{ request('type') == 'scaffold' ? 'selected' : '' }}>Rusztowanie</option>
-                    <option value="platform" {{ request('type') == 'platform' ? 'selected' : '' }}>Platforma</option>
+                    @foreach($types as $key => $value)
+                        <option value="{{ $key }}" {{ request('type') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-2">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status">
                     <option value="">Wszystkie</option>
-                    <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>Dostępne</option>
-                    <option value="in_use" {{ request('status') == 'in_use' ? 'selected' : '' }}>W użyciu</option>
-                    <option value="maintenance" {{ request('status') == 'maintenance' ? 'selected' : '' }}>Naprawa</option>
-                    <option value="damaged" {{ request('status') == 'damaged' ? 'selected' : '' }}>Uszkodzone</option>
+                    @foreach($statuses as $key => $value)
+                        <option value="{{ $key }}" {{ request('status') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3">

@@ -72,17 +72,9 @@
                             <label for="type" class="form-label">Typ <span class="text-danger">*</span></label>
                             <select class="form-select @error('type') is-invalid @enderror" id="type" name="type" required>
                                 <option value="">Wybierz typ</option>
-                                <option value="computer" {{ old('type', $itEquipment->type) == 'computer' ? 'selected' : '' }}>Komputer</option>
-                                <option value="laptop" {{ old('type', $itEquipment->type) == 'laptop' ? 'selected' : '' }}>Laptop</option>
-                                <option value="printer" {{ old('type', $itEquipment->type) == 'printer' ? 'selected' : '' }}>Drukarka</option>
-                                <option value="scanner" {{ old('type', $itEquipment->type) == 'scanner' ? 'selected' : '' }}>Skaner</option>
-                                <option value="phone" {{ old('type', $itEquipment->type) == 'phone' ? 'selected' : '' }}>Telefon</option>
-                                <option value="tablet" {{ old('type', $itEquipment->type) == 'tablet' ? 'selected' : '' }}>Tablet</option>
-                                <option value="monitor" {{ old('type', $itEquipment->type) == 'monitor' ? 'selected' : '' }}>Monitor</option>
-                                <option value="server" {{ old('type', $itEquipment->type) == 'server' ? 'selected' : '' }}>Serwer</option>
-                                <option value="router" {{ old('type', $itEquipment->type) == 'router' ? 'selected' : '' }}>Router</option>
-                                <option value="switch" {{ old('type', $itEquipment->type) == 'switch' ? 'selected' : '' }}>Switch</option>
-                                <option value="other" {{ old('type', $itEquipment->type) == 'other' ? 'selected' : '' }}>Inne</option>
+                                @foreach($types as $key => $value)
+                                    <option value="{{ $key }}" {{ old('type', $itEquipment->type) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
                             </select>
                             @error('type')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -94,11 +86,9 @@
                         <div class="col-md-6">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                                <option value="available" {{ old('status', $itEquipment->status) == 'available' ? 'selected' : '' }}>Dostępny</option>
-                                <option value="in_use" {{ old('status', $itEquipment->status) == 'in_use' ? 'selected' : '' }}>W użyciu</option>
-                                <option value="maintenance" {{ old('status', $itEquipment->status) == 'maintenance' ? 'selected' : '' }}>Konserwacja</option>
-                                <option value="damaged" {{ old('status', $itEquipment->status) == 'damaged' ? 'selected' : '' }}>Uszkodzony</option>
-                                <option value="retired" {{ old('status', $itEquipment->status) == 'retired' ? 'selected' : '' }}>Wycofany</option>
+                                @foreach($statuses as $key => $value)
+                                    <option value="{{ $key }}" {{ old('status', $itEquipment->status) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
                             </select>
                             @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -142,8 +132,12 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="operating_system" class="form-label">System operacyjny</label>
-                            <input type="text" class="form-control @error('operating_system') is-invalid @enderror" 
-                                   id="operating_system" name="operating_system" value="{{ old('operating_system', $itEquipment->operating_system) }}">
+                            <select class="form-select @error('operating_system') is-invalid @enderror" id="operating_system" name="operating_system">
+                                <option value="">Wybierz system</option>
+                                @foreach($operatingSystems as $key => $value)
+                                    <option value="{{ $key }}" {{ old('operating_system', $itEquipment->operating_system) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
+                            </select>
                             @error('operating_system')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

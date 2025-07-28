@@ -23,28 +23,18 @@
                 <label for="type" class="form-label">Typ</label>
                 <select class="form-select" id="type" name="type">
                     <option value="">Wszystkie</option>
-                    <option value="computer" {{ request('type') == 'computer' ? 'selected' : '' }}>Komputer</option>
-                    <option value="laptop" {{ request('type') == 'laptop' ? 'selected' : '' }}>Laptop</option>
-                    <option value="printer" {{ request('type') == 'printer' ? 'selected' : '' }}>Drukarka</option>
-                    <option value="scanner" {{ request('type') == 'scanner' ? 'selected' : '' }}>Skaner</option>
-                    <option value="phone" {{ request('type') == 'phone' ? 'selected' : '' }}>Telefon</option>
-                    <option value="tablet" {{ request('type') == 'tablet' ? 'selected' : '' }}>Tablet</option>
-                    <option value="monitor" {{ request('type') == 'monitor' ? 'selected' : '' }}>Monitor</option>
-                    <option value="server" {{ request('type') == 'server' ? 'selected' : '' }}>Serwer</option>
-                    <option value="router" {{ request('type') == 'router' ? 'selected' : '' }}>Router</option>
-                    <option value="switch" {{ request('type') == 'switch' ? 'selected' : '' }}>Switch</option>
-                    <option value="other" {{ request('type') == 'other' ? 'selected' : '' }}>Inne</option>
+                    @foreach($types as $key => $value)
+                        <option value="{{ $key }}" {{ request('type') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-2">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status">
                     <option value="">Wszystkie</option>
-                    <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>Dostępne</option>
-                    <option value="in_use" {{ request('status') == 'in_use' ? 'selected' : '' }}>W użyciu</option>
-                    <option value="maintenance" {{ request('status') == 'maintenance' ? 'selected' : '' }}>Konserwacja</option>
-                    <option value="damaged" {{ request('status') == 'damaged' ? 'selected' : '' }}>Uszkodzone</option>
-                    <option value="retired" {{ request('status') == 'retired' ? 'selected' : '' }}>Wycofane</option>
+                    @foreach($statuses as $key => $value)
+                        <option value="{{ $key }}" {{ request('status') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
                 </select>
             </div>
             <div class="col-md-3">

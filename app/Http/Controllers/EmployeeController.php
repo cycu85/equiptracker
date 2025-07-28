@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Dictionary;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -48,12 +49,19 @@ class EmployeeController extends Controller
 
         $employees = $query->paginate(15)->appends($request->query());
         
-        return view('employees.index', compact('employees'));
+        // Get dictionary options for filters
+        $departments = Dictionary::getOptions('employee_departments');
+        $statuses = Dictionary::getOptions('employee_statuses');
+        
+        return view('employees.index', compact('employees', 'departments', 'statuses'));
     }
 
     public function create()
     {
-        return view('employees.create');
+        $departments = Dictionary::getOptions('employee_departments');
+        $statuses = Dictionary::getOptions('employee_statuses');
+        
+        return view('employees.create', compact('departments', 'statuses'));
     }
 
     public function store(Request $request)
@@ -69,7 +77,10 @@ class EmployeeController extends Controller
 
     public function edit(Employee $employee)
     {
-        return view('employees.edit', compact('employee'));
+        $departments = Dictionary::getOptions('employee_departments');
+        $statuses = Dictionary::getOptions('employee_statuses');
+        
+        return view('employees.edit', compact('employee', 'departments', 'statuses'));
     }
 
     public function update(Request $request, Employee $employee)

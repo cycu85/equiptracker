@@ -72,12 +72,9 @@
                             <label for="type" class="form-label">Typ <span class="text-danger">*</span></label>
                             <select class="form-select @error('type') is-invalid @enderror" id="type" name="type" required>
                                 <option value="">Wybierz typ</option>
-                                <option value="ladder" {{ old('type', $heightEquipment->type) == 'ladder' ? 'selected' : '' }}>Drabina</option>
-                                <option value="scaffold" {{ old('type', $heightEquipment->type) == 'scaffold' ? 'selected' : '' }}>Rusztowanie</option>
-                                <option value="platform" {{ old('type', $heightEquipment->type) == 'platform' ? 'selected' : '' }}>Platforma</option>
-                                <option value="harness" {{ old('type', $heightEquipment->type) == 'harness' ? 'selected' : '' }}>Uprząż</option>
-                                <option value="rope" {{ old('type', $heightEquipment->type) == 'rope' ? 'selected' : '' }}>Lina</option>
-                                <option value="other" {{ old('type', $heightEquipment->type) == 'other' ? 'selected' : '' }}>Inne</option>
+                                @foreach($types as $key => $value)
+                                    <option value="{{ $key }}" {{ old('type', $heightEquipment->type) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
                             </select>
                             @error('type')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -89,11 +86,9 @@
                         <div class="col-md-6">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                                <option value="available" {{ old('status', $heightEquipment->status) == 'available' ? 'selected' : '' }}>Dostępny</option>
-                                <option value="in_use" {{ old('status', $heightEquipment->status) == 'in_use' ? 'selected' : '' }}>W użyciu</option>
-                                <option value="maintenance" {{ old('status', $heightEquipment->status) == 'maintenance' ? 'selected' : '' }}>Konserwacja</option>
-                                <option value="damaged" {{ old('status', $heightEquipment->status) == 'damaged' ? 'selected' : '' }}>Uszkodzony</option>
-                                <option value="retired" {{ old('status', $heightEquipment->status) == 'retired' ? 'selected' : '' }}>Wycofany</option>
+                                @foreach($statuses as $key => $value)
+                                    <option value="{{ $key }}" {{ old('status', $heightEquipment->status) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
                             </select>
                             @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>

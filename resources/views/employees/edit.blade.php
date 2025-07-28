@@ -51,8 +51,9 @@
                         <div class="col-md-6">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-select @error('status') is-invalid @enderror" id="status" name="status" required>
-                                <option value="active" {{ old('status', $employee->status) == 'active' ? 'selected' : '' }}>Aktywny</option>
-                                <option value="inactive" {{ old('status', $employee->status) == 'inactive' ? 'selected' : '' }}>Nieaktywny</option>
+                                @foreach($statuses as $key => $value)
+                                    <option value="{{ $key }}" {{ old('status', $employee->status) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
                             </select>
                             @error('status')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -97,16 +98,9 @@
                             <label for="department" class="form-label">Dział</label>
                             <select class="form-select @error('department') is-invalid @enderror" id="department" name="department">
                                 <option value="">Wybierz dział</option>
-                                <option value="IT" {{ old('department', $employee->department) == 'IT' ? 'selected' : '' }}>IT</option>
-                                <option value="HR" {{ old('department', $employee->department) == 'HR' ? 'selected' : '' }}>HR</option>
-                                <option value="Finansowy" {{ old('department', $employee->department) == 'Finansowy' ? 'selected' : '' }}>Finansowy</option>
-                                <option value="Produkcja" {{ old('department', $employee->department) == 'Produkcja' ? 'selected' : '' }}>Produkcja</option>
-                                <option value="Sprzedaż" {{ old('department', $employee->department) == 'Sprzedaż' ? 'selected' : '' }}>Sprzedaż</option>
-                                <option value="Marketing" {{ old('department', $employee->department) == 'Marketing' ? 'selected' : '' }}>Marketing</option>
-                                <option value="Biuro" {{ old('department', $employee->department) == 'Biuro' ? 'selected' : '' }}>Biuro</option>
-                                <option value="Warsztat" {{ old('department', $employee->department) == 'Warsztat' ? 'selected' : '' }}>Warsztat</option>
-                                <option value="Magazyn" {{ old('department', $employee->department) == 'Magazyn' ? 'selected' : '' }}>Magazyn</option>
-                                <option value="Inne" {{ old('department', $employee->department) == 'Inne' ? 'selected' : '' }}>Inne</option>
+                                @foreach($departments as $key => $value)
+                                    <option value="{{ $key }}" {{ old('department', $employee->department) == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
                             </select>
                             @error('department')
                                 <div class="invalid-feedback">{{ $message }}</div>
