@@ -48,7 +48,7 @@ class ToolsetController extends Controller
 
     public function create()
     {
-        $availableTools = Tool::where('status', 'available')->get();
+        $availableTools = Tool::orderBy('name')->get();
         return view('toolsets.create', compact('availableTools'));
     }
 
@@ -103,9 +103,7 @@ class ToolsetController extends Controller
     public function edit(Toolset $toolset)
     {
         $toolset->load(['tools']);
-        $availableTools = Tool::where('status', 'available')
-                              ->orWhereIn('id', $toolset->tools->pluck('id'))
-                              ->get();
+        $availableTools = Tool::orderBy('name')->get();
         
         return view('toolsets.edit', compact('toolset', 'availableTools'));
     }
