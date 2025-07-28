@@ -54,6 +54,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware
     Route::get('/data-management', [\App\Http\Controllers\Admin\AdminController::class, 'dataManagement'])->name('data-management');
     Route::post('/clear-data', [\App\Http\Controllers\Admin\AdminController::class, 'clearData'])->name('clear-data');
     Route::get('/system-info', [\App\Http\Controllers\Admin\AdminController::class, 'systemInfo'])->name('system-info');
+    
+    // User Management Routes
+    Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    Route::post('/users/{user}/reset-password', [\App\Http\Controllers\Admin\UserController::class, 'resetPassword'])->name('users.reset-password');
 });
 
 // Install Routes

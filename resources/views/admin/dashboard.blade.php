@@ -204,25 +204,33 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3 mb-2">
+                        <a href="{{ route('admin.users.index') }}" class="btn btn-outline-success w-100">
+                            <i class="fas fa-users d-block mb-2"></i>
+                            Zarządzanie użytkownikami
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-2">
                         <a href="{{ route('admin.modules') }}" class="btn btn-outline-primary w-100">
                             <i class="fas fa-puzzle-piece d-block mb-2"></i>
                             Zarządzaj modułami
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 mb-2">
                         <a href="{{ route('admin.data-management') }}" class="btn btn-outline-warning w-100">
                             <i class="fas fa-database d-block mb-2"></i>
                             Zarządzanie danymi
                         </a>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 mb-2">
                         <a href="{{ route('admin.system-info') }}" class="btn btn-outline-info w-100">
                             <i class="fas fa-info-circle d-block mb-2"></i>
                             Informacje o systemie
                         </a>
                     </div>
-                    <div class="col-md-3">
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6 mx-auto">
                         <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary w-100">
                             <i class="fas fa-arrow-left d-block mb-2"></i>
                             Powrót do dashboardu
