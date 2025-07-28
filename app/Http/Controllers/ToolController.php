@@ -9,7 +9,7 @@ class ToolController extends Controller
 {
     public function index()
     {
-        $tools = Tool::all();
+        $tools = Tool::paginate(15);
         return view('modules.tools.index', compact('tools'));
     }
 
