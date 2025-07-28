@@ -32,6 +32,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/transfers/{transfer}', [\App\Http\Controllers\TransferController::class, 'show'])->name('transfers.show');
     Route::get('/transfers/{transfer}/pdf', [\App\Http\Controllers\TransferController::class, 'generatePdf'])->name('transfers.pdf');
     Route::post('/transfers/{transfer}/return', [\App\Http\Controllers\TransferController::class, 'return'])->name('transfers.return');
+    
+    // Height Equipment routes
+    Route::resource('height-equipment', \App\Http\Controllers\HeightEquipmentController::class);
 });
 
 // Admin Routes
