@@ -58,7 +58,7 @@ body {
 
 /* Sidebar Styling */
 .sidebar {
-    background: linear-gradient(135deg, var(--bs-primary) 0%, #32408f 100%);
+    background: #2a3042;
     box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
     border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
