@@ -220,6 +220,12 @@
                                                 Zestawy
                                             </a>
                                         </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ request()->routeIs('height-equipment.inspections') ? 'active' : '' }}" href="{{ route('height-equipment.inspections') }}">
+                                                <i class="fas fa-calendar-check me-2"></i>
+                                                Przeglądy
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                             @else
