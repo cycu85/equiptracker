@@ -14,7 +14,7 @@ class EmployeeSeeder extends Seeder
     {
         $employees = [
             [
-                'employee_id' => 'EMP001',
+                'employee_number' => 'EMP001',
                 'first_name' => 'Piotr',
                 'last_name' => 'Wiśniewski',
                 'email' => 'p.wisniewski@firma.pl',
@@ -25,7 +25,7 @@ class EmployeeSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'employee_id' => 'EMP002',
+                'employee_number' => 'EMP002',
                 'first_name' => 'Katarzyna',
                 'last_name' => 'Dąbrowska',
                 'email' => 'k.dabrowska@firma.pl',
@@ -36,7 +36,7 @@ class EmployeeSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'employee_id' => 'EMP003',
+                'employee_number' => 'EMP003',
                 'first_name' => 'Marek',
                 'last_name' => 'Lewandowski',
                 'email' => 'm.lewandowski@firma.pl',
@@ -47,7 +47,7 @@ class EmployeeSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'employee_id' => 'EMP004',
+                'employee_number' => 'EMP004',
                 'first_name' => 'Agnieszka',
                 'last_name' => 'Wójcik',
                 'email' => 'a.wojcik@firma.pl',
@@ -58,7 +58,7 @@ class EmployeeSeeder extends Seeder
                 'status' => 'active',
             ],
             [
-                'employee_id' => 'EMP005',
+                'employee_number' => 'EMP005',
                 'first_name' => 'Tomasz',
                 'last_name' => 'Kamiński',
                 'email' => 't.kaminski@firma.pl',
@@ -72,7 +72,7 @@ class EmployeeSeeder extends Seeder
 
         foreach ($employees as $employeeData) {
             \App\Models\Employee::updateOrCreate(
-                ['employee_id' => $employeeData['employee_id']], // Warunek wyszukiwania
+                ['employee_number' => $employeeData['employee_number']], // Warunek wyszukiwania
                 $employeeData // Dane do utworzenia/aktualizacji
             );
         }
