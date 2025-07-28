@@ -9,6 +9,8 @@ class HeightEquipment extends Model
 {
     use HasFactory;
 
+    protected $table = 'height_equipment';
+
     protected $fillable = [
         'name',
         'brand',

@@ -9,6 +9,8 @@ class ITEquipment extends Model
 {
     use HasFactory;
 
+    protected $table = 'it_equipment';
+
     protected $fillable = [
         'name',
         'brand',
