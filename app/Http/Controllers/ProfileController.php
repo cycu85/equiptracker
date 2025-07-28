@@ -45,4 +45,17 @@ class ProfileController extends Controller
 
         return back()->with('success', 'Hasło zostało zmienione.');
     }
+
+    public function updateTheme(Request $request)
+    {
+        $request->validate([
+            'theme' => 'required|in:default,velzon',
+        ]);
+
+        auth()->user()->update([
+            'theme_preference' => $request->theme,
+        ]);
+
+        return back()->with('success', 'Motyw został zmieniony.');
+    }
 }

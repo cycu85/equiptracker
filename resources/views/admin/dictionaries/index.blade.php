@@ -69,7 +69,7 @@
     <div class="card-body">
         @if($dictionaries->count() > 0)
             <div class="table-responsive">
-                <table class="table table-hover" id="dictionaryTable">
+                <table class="table table-hover table-striped" id="dictionaryTable">
                     <thead>
                         <tr>
                             <th width="50">

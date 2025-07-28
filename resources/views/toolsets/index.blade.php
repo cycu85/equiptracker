@@ -57,7 +57,7 @@
     <div class="card-body">
         @if($toolsets->count() > 0)
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <x-sortable-header field="id" title="ID" />

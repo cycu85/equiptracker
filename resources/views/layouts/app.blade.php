@@ -11,6 +11,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Poppins Font for Velzon theme -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    @auth
+        @if((auth()->user()->theme_preference ?? 'default') === 'velzon')
+            <!-- Velzon Professional Theme -->
+            <link href="{{ asset('css/velzon-theme.css') }}" rel="stylesheet">
+        @endif
+    @endauth
     
     <style>
         .sidebar {

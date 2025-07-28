@@ -28,6 +28,7 @@ class User extends Authenticatable
         'auth_type',
         'ldap_dn',
         'is_active',
+        'theme_preference',
     ];
 
     /**

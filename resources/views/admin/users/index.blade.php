@@ -33,7 +33,7 @@
     <div class="card-body">
         @if($users->count() > 0)
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>

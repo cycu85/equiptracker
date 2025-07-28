@@ -33,7 +33,7 @@
     <div class="card-body">
         @if($roles->count() > 0)
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-hover table-striped">
                     <thead class="table-light">
                         <tr>
                             <th>ID</th>

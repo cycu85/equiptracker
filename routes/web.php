@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile');
     Route::put('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
     Route::put('/profile/password', [\App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password');
+    Route::put('/profile/theme', [\App\Http\Controllers\ProfileController::class, 'updateTheme'])->name('profile.theme');
     
     // Transfer routes
     Route::get('/transfers', [\App\Http\Controllers\TransferController::class, 'index'])->name('transfers.index');

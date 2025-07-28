@@ -139,6 +139,45 @@
             </div>
         </div>
 
+        <!-- Theme Settings -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5><i class="fas fa-palette"></i> Ustawienia wyglądu</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ route('profile.theme') }}">
+                    @csrf
+                    @method('PUT')
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Motyw aplikacji</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="theme" id="theme_default" 
+                                   value="default" {{ (auth()->user()->theme_preference ?? 'default') === 'default' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="theme_default">
+                                <strong>Domyślny</strong>
+                                <br><small class="text-muted">Standardowy wygląd aplikacji</small>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="theme" id="theme_velzon" 
+                                   value="velzon" {{ (auth()->user()->theme_preference ?? 'default') === 'velzon' ? 'checked' : '' }}>
+                            <label class="form-check-label" for="theme_velzon">
+                                <strong>Velzon Professional</strong>
+                                <br><small class="text-muted">Nowoczesny, profesjonalny motyw z ulepszonymi tabelami</small>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Zastosuj motyw
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- Account Security -->
         <div class="card mb-4">
             <div class="card-header">
@@ -155,6 +194,13 @@
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span>Status konta:</span>
                     <span class="badge bg-success">Aktywne</span>
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span>Aktualny motyw:</span>
+                    <span class="badge bg-info">
+                        {{ (auth()->user()->theme_preference ?? 'default') === 'velzon' ? 'Velzon Professional' : 'Domyślny' }}
+                    </span>
                 </div>
                 
                 <div class="d-flex justify-content-between align-items-center">

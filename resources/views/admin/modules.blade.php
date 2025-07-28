@@ -20,7 +20,7 @@
             <div class="card-body">
                 @if($modules->count() > 0)
                     <div class="table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
                                     <th width="50">Kolejność</th>
