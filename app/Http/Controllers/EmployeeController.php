@@ -7,9 +7,47 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::paginate(15);
+        $query = Employee::query();
+
+        // Filtering
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('first_name', 'like', "%{$search}%")
+                  ->orWhere('last_name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('employee_number', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('department')) {
+            $query->where('department', $request->department);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('position')) {
+            $query->where('position', 'like', "%{$request->position}%");
+        }
+
+        // Sorting
+        $sortBy = $request->get('sort', 'last_name');
+        $sortDirection = $request->get('direction', 'asc');
+        
+        // Validate sort column
+        $allowedSorts = ['id', 'first_name', 'last_name', 'email', 'department', 'position', 'status', 'hire_date', 'created_at'];
+        if (!in_array($sortBy, $allowedSorts)) {
+            $sortBy = 'last_name';
+        }
+
+        $query->orderBy($sortBy, $sortDirection);
+
+        $employees = $query->paginate(15)->appends($request->query());
+        
         return view('employees.index', compact('employees'));
     }
 

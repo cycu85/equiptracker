@@ -62,13 +62,13 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Pracownik</th>
-                            <th>Email</th>
-                            <th>Stanowisko</th>
-                            <th>Dział</th>
+                            <x-sortable-header field="id" title="ID" />
+                            <x-sortable-header field="last_name" title="Pracownik" />
+                            <x-sortable-header field="email" title="Email" />
+                            <x-sortable-header field="position" title="Stanowisko" />
+                            <x-sortable-header field="department" title="Dział" />
                             <th>Telefon</th>
-                            <th>Status</th>
+                            <x-sortable-header field="status" title="Status" />
                         </tr>
                     </thead>
                     <tbody>

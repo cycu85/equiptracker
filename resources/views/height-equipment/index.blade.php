@@ -63,12 +63,12 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Nazwa</th>
-                            <th>Marka/Model</th>
-                            <th>Typ</th>
-                            <th>Status</th>
-                            <th>Lokalizacja</th>
+                            <x-sortable-header field="id" title="ID" />
+                            <x-sortable-header field="name" title="Nazwa" />
+                            <x-sortable-header field="brand" title="Marka/Model" />
+                            <x-sortable-header field="type" title="Typ" />
+                            <x-sortable-header field="status" title="Status" />
+                            <x-sortable-header field="location" title="Lokalizacja" />
                             <th>Następny przegląd</th>
                         </tr>
                     </thead>
