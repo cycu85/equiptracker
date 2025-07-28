@@ -67,6 +67,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', \App\Http\Middleware
     
     // Role Management Routes
     Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class);
+    
+    // Dictionary Management Routes
+    Route::resource('dictionaries', \App\Http\Controllers\Admin\DictionaryController::class);
+    Route::post('/dictionaries/sort', [\App\Http\Controllers\Admin\DictionaryController::class, 'updateSort'])->name('dictionaries.sort');
 });
 
 // Install Routes
