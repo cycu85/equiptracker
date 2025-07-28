@@ -142,6 +142,72 @@
                 </div>
             </div>
         </div>
+
+        <!-- Toolset Membership -->
+        @if($tool->toolsets->count() > 0)
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5><i class="fas fa-toolbox"></i> Członkostwo w zestawach</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Zestaw</th>
+                                <th>Ilość</th>
+                                <th>Typ</th>
+                                <th>Status zestawu</th>
+                                <th>Notatki</th>
+                                <th>Akcje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($tool->toolsets as $toolset)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('toolsets.show', $toolset) }}" class="text-decoration-none">
+                                            <strong>{{ $toolset->name }}</strong>
+                                        </a>
+                                        @if($toolset->code)
+                                            <br><small class="text-muted">Kod: {{ $toolset->code }}</small>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info">{{ $toolset->pivot->quantity }}</span>
+                                    </td>
+                                    <td>
+                                        @if($toolset->pivot->is_required)
+                                            <span class="badge bg-danger">Wymagane</span>
+                                        @else
+                                            <span class="badge bg-secondary">Opcjonalne</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span class="badge {{ $toolset->status_badge }}">
+                                            {{ $toolset->status_label }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if($toolset->pivot->notes)
+                                            <small class="text-muted">{{ $toolset->pivot->notes }}</small>
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('toolsets.show', $toolset) }}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 
     <!-- Status and Actions -->

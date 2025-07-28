@@ -49,6 +49,15 @@ class ModuleSeeder extends Seeder
                 'icon' => 'fa-users',
                 'route_prefix' => 'employees',
             ],
+            [
+                'name' => 'Toolsets',
+                'display_name' => 'Zestawy narzędzi',
+                'description' => 'Zarządzanie zestawami narzędzi',
+                'is_enabled' => true,
+                'sort_order' => 5,
+                'icon' => 'fa-toolbox',
+                'route_prefix' => 'toolsets',
+            ],
         ];
 
         foreach ($modules as $module) {

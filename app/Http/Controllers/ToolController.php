@@ -9,7 +9,7 @@ class ToolController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Tool::query();
+        $query = Tool::query()->with(['toolsets']);
 
         // Filtering
         if ($request->filled('search')) {
@@ -53,6 +53,7 @@ class ToolController extends Controller
 
     public function show(Tool $tool)
     {
+        $tool->load(['toolsets']);
         return view('modules.tools.show', compact('tool'));
     }
 

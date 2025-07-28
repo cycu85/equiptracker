@@ -69,6 +69,7 @@
                             <x-sortable-header field="category" title="Kategoria" />
                             <x-sortable-header field="status" title="Status" />
                             <x-sortable-header field="location" title="Lokalizacja" />
+                            <th>Zestawy</th>
                             <th>Następny przegląd</th>
                         </tr>
                     </thead>
@@ -114,6 +115,19 @@
                                 @endswitch
                             </td>
                             <td>{{ $tool->location ?? 'Nieznana' }}</td>
+                            <td>
+                                @if($tool->toolsets->count() > 0)
+                                    <span class="badge bg-info">{{ $tool->toolsets->count() }}</span>
+                                    <small class="text-muted d-block">
+                                        {{ $tool->toolsets->pluck('name')->take(2)->join(', ') }}
+                                        @if($tool->toolsets->count() > 2)
+                                            <br>+{{ $tool->toolsets->count() - 2 }} więcej
+                                        @endif
+                                    </small>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </td>
                             <td>
                                 @if($tool->next_inspection_date)
                                     <span class="text-{{ $tool->next_inspection_date->isPast() ? 'danger' : ($tool->next_inspection_date->diffInDays() < 30 ? 'warning' : 'muted') }}">
