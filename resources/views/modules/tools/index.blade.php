@@ -70,7 +70,6 @@
                             <th>Status</th>
                             <th>Lokalizacja</th>
                             <th>Następny przegląd</th>
-                            <th>Akcje</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +77,9 @@
                         <tr>
                             <td>{{ $tool->id }}</td>
                             <td>
-                                <strong>{{ $tool->name }}</strong>
+                                <a href="{{ route('tools.show', $tool) }}" class="text-decoration-none">
+                                    <strong>{{ $tool->name }}</strong>
+                                </a>
                                 @if($tool->serial_number)
                                     <br><small class="text-muted">S/N: {{ $tool->serial_number }}</small>
                                 @endif
@@ -121,20 +122,6 @@
                                 @else
                                     <span class="text-muted">Brak</span>
                                 @endif
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{{ route('tools.show', $tool) }}" class="btn btn-outline-info" title="Podgląd">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('tools.edit', $tool) }}" class="btn btn-outline-primary" title="Edytuj">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-outline-danger" title="Usuń" 
-                                            onclick="confirmDelete({{ $tool->id }}, '{{ $tool->name }}')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
                             </td>
                         </tr>
                         @endforeach

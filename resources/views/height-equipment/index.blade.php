@@ -70,7 +70,6 @@
                             <th>Status</th>
                             <th>Lokalizacja</th>
                             <th>Następny przegląd</th>
-                            <th>Akcje</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -78,7 +77,9 @@
                         <tr>
                             <td>{{ $equipment->id }}</td>
                             <td>
-                                <strong>{{ $equipment->name }}</strong>
+                                <a href="{{ route('height-equipment.show', $equipment) }}" class="text-decoration-none">
+                                    <strong>{{ $equipment->name }}</strong>
+                                </a>
                                 @if($equipment->serial_number)
                                     <br><small class="text-muted">S/N: {{ $equipment->serial_number }}</small>
                                 @endif
@@ -121,20 +122,6 @@
                                 @else
                                     <span class="text-muted">Brak</span>
                                 @endif
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{{ route('height-equipment.show', $equipment) }}" class="btn btn-outline-info" title="Podgląd">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('height-equipment.edit', $equipment) }}" class="btn btn-outline-primary" title="Edytuj">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-outline-danger" title="Usuń" 
-                                            onclick="confirmDelete({{ $equipment->id }}, '{{ $equipment->name }}')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
                             </td>
                         </tr>
                         @endforeach

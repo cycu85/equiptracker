@@ -69,7 +69,6 @@
                             <th>Dział</th>
                             <th>Telefon</th>
                             <th>Status</th>
-                            <th>Akcje</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,9 +76,11 @@
                         <tr>
                             <td>{{ $employee->id }}</td>
                             <td>
-                                <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong>
-                                @if($employee->employee_id)
-                                    <br><small class="text-muted">ID: {{ $employee->employee_id }}</small>
+                                <a href="{{ route('employees.show', $employee) }}" class="text-decoration-none">
+                                    <strong>{{ $employee->first_name }} {{ $employee->last_name }}</strong>
+                                </a>
+                                @if($employee->employee_number)
+                                    <br><small class="text-muted">Nr: {{ $employee->employee_number }}</small>
                                 @endif
                             </td>
                             <td>{{ $employee->email ?? 'Brak' }}</td>
@@ -103,20 +104,6 @@
                                     @default
                                         <span class="badge bg-success">Aktywny</span>
                                 @endswitch
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{{ route('employees.show', $employee) }}" class="btn btn-outline-info" title="Podgląd">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('employees.edit', $employee) }}" class="btn btn-outline-primary" title="Edytuj">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button type="button" class="btn btn-outline-danger" title="Usuń" 
-                                            onclick="confirmDelete({{ $employee->id }}, '{{ $employee->first_name }} {{ $employee->last_name }}')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
                             </td>
                         </tr>
                         @endforeach

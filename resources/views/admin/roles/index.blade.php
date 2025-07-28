@@ -43,7 +43,6 @@
                             <th>Uprawnienia</th>
                             <th>Użytkownicy</th>
                             <th>Typ</th>
-                            <th>Akcje</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,7 +50,9 @@
                             <tr>
                                 <td>{{ $role->id }}</td>
                                 <td>
-                                    <strong>{{ $role->name }}</strong>
+                                    <a href="{{ route('admin.roles.show', $role) }}" class="text-decoration-none">
+                                        <strong>{{ $role->name }}</strong>
+                                    </a>
                                 </td>
                                 <td>{{ $role->display_name }}</td>
                                 <td>
@@ -75,30 +76,6 @@
                                     @else
                                         <span class="badge bg-success">Niestandardowa</span>
                                     @endif
-                                </td>
-                                <td>
-                                    <div class="btn-group" role="group">
-                                        <a href="{{ route('admin.roles.show', $role) }}" 
-                                           class="btn btn-outline-info btn-sm" title="Podgląd">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        @unless($role->is_system)
-                                            <a href="{{ route('admin.roles.edit', $role) }}" 
-                                               class="btn btn-outline-primary btn-sm" title="Edytuj">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form method="POST" action="{{ route('admin.roles.destroy', $role) }}" 
-                                                  style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger btn-sm" 
-                                                        title="Usuń" 
-                                                        onclick="return confirm('Czy na pewno chcesz usunąć tę rolę?')">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        @endunless
-                                    </div>
                                 </td>
                             </tr>
                         @endforeach

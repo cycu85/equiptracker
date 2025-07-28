@@ -42,7 +42,6 @@
                             <th>Rola</th>
                             <th>Data rejestracji</th>
                             <th>Ostatnia aktualizacja</th>
-                            <th>Akcje</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,7 +52,9 @@
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-user-circle fa-2x text-muted me-2"></i>
                                     <div>
-                                        <strong>{{ $user->name }}</strong>
+                                        <a href="{{ route('admin.users.show', $user) }}" class="text-decoration-none">
+                                            <strong>{{ $user->name }}</strong>
+                                        </a>
                                         @if($user->id === auth()->id())
                                             <small class="badge bg-info">To Ty</small>
                                         @endif
@@ -68,22 +69,6 @@
                             </td>
                             <td>{{ $user->created_at->format('d.m.Y H:i') }}</td>
                             <td>{{ $user->updated_at->format('d.m.Y H:i') }}</td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <a href="{{ route('admin.users.show', $user) }}" class="btn btn-outline-info" title="Podgląd">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-outline-primary" title="Edytuj">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    @if($user->id !== auth()->id())
-                                        <button type="button" class="btn btn-outline-danger" title="Usuń" 
-                                                onclick="confirmDelete({{ $user->id }}, '{{ $user->name }}')">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    @endif
-                                </div>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>
