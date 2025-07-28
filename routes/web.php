@@ -41,6 +41,9 @@ Route::middleware('auth')->group(function () {
     
     // Employee routes
     Route::resource('employees', \App\Http\Controllers\EmployeeController::class);
+    
+    // Tools routes
+    Route::resource('tools', \App\Http\Controllers\ToolController::class);
 });
 
 // Admin Routes
