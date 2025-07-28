@@ -5,9 +5,14 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="fas fa-ladder"></i> Zarządzanie sprzętem wysokościowym</h2>
-    <a href="{{ route('height-equipment.create') }}" class="btn btn-primary">
-        <i class="fas fa-plus"></i> Dodaj sprzęt
-    </a>
+    <div>
+        <a href="{{ route('height-equipment.inspections') }}" class="btn btn-outline-warning me-2">
+            <i class="fas fa-calendar-check"></i> Harmonogram przeglądów
+        </a>
+        <a href="{{ route('height-equipment.create') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Dodaj sprzęt
+        </a>
+    </div>
 </div>
 
 <!-- Filters -->
@@ -70,6 +75,7 @@
                             <x-sortable-header field="location" title="Lokalizacja" />
                             <th>Zestawy</th>
                             <th>Następny przegląd</th>
+                            <th>Akcje</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -129,12 +135,54 @@
                             </td>
                             <td>
                                 @if($equipment->next_inspection_date)
-                                    <span class="text-{{ $equipment->next_inspection_date->isPast() ? 'danger' : ($equipment->next_inspection_date->diffInDays() < 30 ? 'warning' : 'muted') }}">
+                                    @php
+                                        $daysUntil = now()->diffInDays($equipment->next_inspection_date, false);
+                                        $isOverdue = $daysUntil < 0;
+                                        $isDueSoon = $daysUntil >= 0 && $daysUntil <= 30;
+                                        $badgeClass = $isOverdue ? 'danger' : ($isDueSoon ? 'warning' : 'success');
+                                    @endphp
+                                    <span class="badge bg-{{ $badgeClass }}">
                                         {{ $equipment->next_inspection_date->format('d.m.Y') }}
                                     </span>
+                                    @if($isOverdue)
+                                        <br><small class="text-danger">Przeterminowany o {{ abs($daysUntil) }} dni</small>
+                                    @elseif($isDueSoon)
+                                        <br><small class="text-warning">Za {{ $daysUntil }} dni</small>
+                                    @endif
+                                    @if($equipment->last_inspection_date)
+                                        <br><small class="text-muted">Ostatni: {{ $equipment->last_inspection_date->format('d.m.Y') }}</small>
+                                    @endif
                                 @else
-                                    <span class="text-muted">Brak</span>
+                                    <span class="badge bg-secondary">Nie ustawiono</span>
+                                    <br><small class="text-muted">Brak harmonogramu</small>
                                 @endif
+                            </td>
+                            <td>
+                                <div class="btn-group-vertical btn-group-sm" role="group">
+                                    @php
+                                        $needsInspection = !$equipment->next_inspection_date || $equipment->next_inspection_date->isPast() || $equipment->next_inspection_date->diffInDays() <= 30;
+                                    @endphp
+                                    
+                                    <button type="button" class="btn btn-outline-{{ $needsInspection ? 'warning' : 'primary' }} btn-sm mb-1" 
+                                            data-bs-toggle="modal" 
+                                            data-bs-target="#inspectionModal"
+                                            onclick="openInspectionModal({{ $equipment->id }}, '{{ $equipment->name }}', '{{ $equipment->last_inspection_date?->format('Y-m-d') }}', '{{ $equipment->next_inspection_date?->format('Y-m-d') }}')">
+                                        <i class="fas fa-calendar-check"></i>
+                                        @if($needsInspection)
+                                            Pilny przegląd
+                                        @else
+                                            Przegląd
+                                        @endif
+                                    </button>
+                                    
+                                    <a href="{{ route('height-equipment.show', $equipment) }}" class="btn btn-outline-secondary btn-sm mb-1">
+                                        <i class="fas fa-eye"></i> Szczegóły
+                                    </a>
+                                    
+                                    <a href="{{ route('height-equipment.edit', $equipment) }}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-edit"></i> Edytuj
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -177,6 +225,56 @@
         </div>
     </div>
 </div>
+
+<!-- Inspection Modal -->
+<div class="modal fade" id="inspectionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Rejestracja przeglądu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form id="inspectionForm" method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Sprzęt</label>
+                        <input type="text" class="form-control" id="equipmentName" readonly>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="last_inspection_date" class="form-label">Data wykonania przeglądu <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="last_inspection_date" name="last_inspection_date" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="next_inspection_date" class="form-label">Data następnego przeglądu <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="next_inspection_date" name="next_inspection_date" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="inspection_notes" class="form-label">Uwagi z przeglądu</label>
+                        <textarea class="form-control" id="inspection_notes" name="inspection_notes" rows="3" 
+                                  placeholder="Opcjonalne uwagi dotyczące przeglądu..."></textarea>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Informacja:</strong> Przegląd zostanie zarejestrowany, a informacje o nim zostaną dodane do notatek sprzętu.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Zapisz przegląd
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -186,5 +284,29 @@ function confirmDelete(equipmentId, equipmentName) {
     document.getElementById('deleteForm').action = '/height-equipment/' + equipmentId;
     new bootstrap.Modal(document.getElementById('deleteModal')).show();
 }
+
+function openInspectionModal(equipmentId, equipmentName, lastInspection, nextInspection) {
+    document.getElementById('equipmentName').value = equipmentName;
+    document.getElementById('inspectionForm').action = '/height-equipment/' + equipmentId + '/inspection';
+    
+    // Set today's date for last inspection
+    document.getElementById('last_inspection_date').value = new Date().toISOString().split('T')[0];
+    
+    // Calculate next inspection date (12 months from today)
+    const nextDate = new Date();
+    nextDate.setFullYear(nextDate.getFullYear() + 1);
+    document.getElementById('next_inspection_date').value = nextDate.toISOString().split('T')[0];
+    
+    // Clear previous notes
+    document.getElementById('inspection_notes').value = '';
+}
+
+// Auto-calculate next inspection date when last inspection changes
+document.getElementById('last_inspection_date').addEventListener('change', function() {
+    const lastDate = new Date(this.value);
+    const nextDate = new Date(lastDate);
+    nextDate.setFullYear(nextDate.getFullYear() + 1);
+    document.getElementById('next_inspection_date').value = nextDate.toISOString().split('T')[0];
+});
 </script>
 @endsection
